@@ -395,7 +395,45 @@ void Adventure::greedyRun() const {
 //   - Put the path of the best run into bestPath.
 //   - Must be recursive and look at every choice.
 int Adventure::bestLoot(Scene<Moment>* scene, int hp, const std::string& path, std::string& bestPath) const {
-    return -1;
+    if (!scene || !scene->getData()) {                          // checks if scene and data are valid / not corrupted
+        return -1;                                              // returns -1 if data invalid
+    }
+    hp += scene->getData()->getHpChange();
+    if (hp <= 0 ) {                                             // returns -1 if player dies
+        return -1;
+    }
+
+    int currentLoot = scene->getData()->getLoot();
+
+    if (scene->isEnding()) {                                    // checks if scene is ending
+        bestPath = path;                                        // first path to end = best path
+        return currentLoot;                                     // returns loot value from path
+    }
+
+    int greatestLoot = -1;                                          // int variable will track highest loot values for each ending
+    std::string thisPath = "";                                  // string variable to track best subtree paths
+
+    for (int i = 0; i < scene->getNumChoices(); i++) {
+        Scene<Moment>* child = scene->getChoice(i);
+        if (!child) {                                           // if child choice invalid moves to next choice
+            continue;
+        }
+
+        std::string nextPath = extendPath(path, (i+1));     // will count path for each individual choice
+        std::string subPath = "";                                       // starts new path string for subTree
+
+        int subPathLoot = bestLoot(child, hp, nextPath, subPath);       // recursive call
+
+        if (subPathLoot != -1) {                                        // if sub path provides any loot
+            int totalLoot = subPathLoot + currentLoot;                  // sub path loot added to total
+            if (totalLoot > greatestLoot) {                             // if total for this path is greater than current best
+                greatestLoot = totalLoot;                               // then total is set to the new best
+                bestPath = subPath;                                     // and this path is set to the new best
+            }
+        }
+    }
+
+    return greatestLoot;                                                 // returns highest loot available from all paths diverging from scene passed
 }
 
 // TODO 19: the optimal advisor. Use bestLoot from the first scene.
