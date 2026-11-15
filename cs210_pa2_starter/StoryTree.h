@@ -15,12 +15,12 @@ private:
     // TODO 6: how many scenes are in the story that starts at scene?
     // An empty story has 0 scenes.
     int countScenes(Scene<T>* scene) const {
-        if (scene == nullptr) {                     // this is our base case when we know we've reached the end
+        if (scene == nullptr) {                                 // this is our base case when we know we've reached the end
             return 0;
         }
-        
-        int count = 1;                              // we'll use this value to count number of scenes starting with current one
-        int i = 0;                                  // i will be used to iterate through child choices
+
+        int count = 1;                                          // we'll use this value to count number of scenes starting with current one
+        int i = 0;                                              // i will be used to iterate through child choices
 
         while ( Scene<T>* child = scene->getChoice(i) ) {       // while will loop through each of the child choices of current choice
             count += countScenes(child);                        // recursively add the count of each child branch
@@ -31,8 +31,22 @@ private:
 
     // TODO 7: how many endings are in the story that starts at scene?
     int countEndings(Scene<T>* scene) const {
-        return 0;
-    }
+        if (scene == nullptr) {                                 // this is our base case when we know we've reached the end
+            return 0;
+        }
+        if (scene->isEnding()) {                                // this checks if current scene is ending where it will return 1
+            return 1;
+        }
+
+        int count = 0;                                          // we'll use this value to count number of endings starting with 0
+        int i = 0;                                              // i will be used to iterate through child choices
+
+        while ( Scene<T>* child = scene->getChoice(i) ) {       // while will loop through each of the child choices of current choice
+            count += countEndings(child);                       // recursively add the count of each found ending
+            i++;
+        }
+        return count;                               // return total scene count for this tree or subtree
+    }                                               // end of method
 
     // TODO 8: the most choices a player can make on the way to an ending,
     // starting at scene. A single ending scene has height 0.
