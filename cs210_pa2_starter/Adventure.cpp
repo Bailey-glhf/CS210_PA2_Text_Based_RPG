@@ -278,7 +278,7 @@ void Adventure::play() {
 void Adventure::printStats() const {
     std::cout << "Scenes: " << tree_.countScenes() << std::endl;
     std::cout << "Endings: " << tree_.countEndings() << std::endl;
-    std::cout << "Longest playthrough: " << tree_.height() << std::endl;
+    std::cout << "Longest playthrough: " << tree_.height() << " choices" << std::endl;
 }                                                                       // end of method
 
 // TODO 15: print every ending in the story, one per line.
@@ -377,13 +377,15 @@ void Adventure::greedyRun() const {
 
         }
 
-        std::cout<< "Greedy Advisor \n" << "Path: " << path << "\nLoot: " << loot << std::endl;
+        std::cout << "Greedy Advisor "<< std::endl;
+        std::cout << "\tPath: " << path << std::endl;
+        std::cout << "\tLoot: " << loot << std::endl;
 
         if (hp <= 0 ) {                                                     // if HP = 0 GAME OVER
-            std::cout << "Result: died" << std::endl;
+            std::cout << "\tResult: died" << std::endl;
         }
         else {                                                              // if ending has been reached GAME OVER
-            std::cout << "Result: reached an ending" << std::endl;
+            std::cout << "\tResult: reached an ending" << std::endl;
         }
 }                                                                            // end of method
 
@@ -453,11 +455,11 @@ void Adventure::optimalRun() const {
 
     if (optimalLoot != -1) {                                                    // as long as survivable ending found print optimal path, loot, & result
         std::cout << "Optimal Advisor" << std::endl;
-        std::cout << "Path: " << optimalPath << std::endl;
-        std::cout << "Loot: " << optimalLoot << std::endl;
-        std::cout << "Result: reached an ending" << std::endl;
+        std::cout << "\tPath: " << optimalPath << std::endl;
+        std::cout << "\tLoot: " << optimalLoot << std::endl;
+        std::cout << "\tResult: reached an ending" << std::endl;
     }else {                                                                     // else print no survivable path result
         std::cout << "Optimal Advisor" << std::endl;
-        std::cout << "Result: no path survives this story " << std::endl;
+        std::cout << "\tResult: no path survives this story " << std::endl;
     }
 }                                                                               // end of method
