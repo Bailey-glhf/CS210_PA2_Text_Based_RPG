@@ -328,6 +328,65 @@ void Adventure::printEndings(Scene<Moment>* scene, const std::string& path) cons
 //     Loot: <loot>
 //     Result: died               (or "Result: reached an ending")
 void Adventure::greedyRun() const {
+    // start and enter scenes same way that play does - copied from play method
+    // removed unnecessary output formatting
+
+    int hp = startHp_;
+    int loot = 0;
+    std::string path = "";                                  // string variable to track path ex 2-2-1
+
+    Scene<Moment>* current = tree_.getRoot();
+    if (!current) {
+        return;
+    }
+
+    while (current != nullptr) {
+        Moment* moment = current->getData();
+        if (!moment) {
+            break;
+        }
+
+        hp+= moment->getHpChange();                             // add its HP change to hp
+        loot+= moment->getLoot();                               // add loot to loot
+
+        if (hp <= 0 || current->isEnding()) {                   // ends run if died or ending reaching
+            break;
+        }
+
+        int numChoices = current->getNumChoices();
+        if (numChoices == 0) {                                  // if there are no further choices ending has been reached
+            break;
+        }
+
+        int bestChoice = 0;                                     // will be used to track best choice index
+        int bestLoot = -1;                                      // will be used to track highest loot
+        bool first = true;
+
+        for (int i = 0; i < numChoices; i++) {                  // loop will iterate through each choice to find best loot
+            Scene<Moment>* child = current->getChoice(i);       // gets each choice in order
+            if (child && child->getData()) {                    // if child is valid node
+                int iLoot = child->getData()->getLoot();        // loot is stored in iLoot
+                if (first || iLoot > bestLoot) {               // first choice loot always stored in best choice
+                    bestLoot = iLoot;                           // beyond first highest loot option chosen
+                    bestChoice = i;
+                    first = false;
+                }
+            }
+        }
+
+        path = extendPath(path, (bestChoice+1));    // adds choice number to string of path
+        current = current->getChoice(bestChoice);               // moves on to check loot choices of next choice
+
+        }
+
+        std::cout<< "Greedy Advisor \n" << "Path: " << path << "\nLoot: " << loot << std::endl;
+
+        if (hp <= 0 ) {                                                     // if HP = 0 GAME OVER
+            std::cout << "Result: died" << std::endl;
+        }
+        else {                                                              // if ending has been reached GAME OVER
+            std::cout << "Result: reached an ending" << std::endl;
+        }
 }
 
 // TODO 18: the best total loot you can collect from scene down to an ending,
