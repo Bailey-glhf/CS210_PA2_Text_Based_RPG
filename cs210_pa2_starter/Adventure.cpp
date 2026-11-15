@@ -135,8 +135,8 @@ Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label)
     // for loop iterates through each choice option
     for (int i = 0; i < choices; i++) {                               // when choices == 0 this is our base case to end recursion, skipping for loop and returning scene
         std::string nextChoice;
-        if (!nextLine(in, nextChoice)) {                        // checks if there is another choice available
-            delete scene;                                             // if no next choice deletes scene and returns nullptr to leave the tree
+        if (!readField(in, "LABEL", nextChoice)) { // checks if there is another choice available
+            delete scene;                                                // if no next choice deletes scene and returns nullptr to leave the tree
             return nullptr;
         }
 
@@ -222,7 +222,7 @@ void Adventure::play() {
         std::cout << moment->getText() << std::endl;            // print scene text
 
         std::string item = moment->getItem();
-        if (!item.empty()) {                                    // if scene has item
+        if (!item.empty() && item != "none") {                  // if scene has item, skips if item listed as none for scene
             bool hasItem = inventory.search(item);
 
             if (hasItem) {
