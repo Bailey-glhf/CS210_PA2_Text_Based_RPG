@@ -15,8 +15,19 @@ private:
     // TODO 6: how many scenes are in the story that starts at scene?
     // An empty story has 0 scenes.
     int countScenes(Scene<T>* scene) const {
-        return 0;
-    }
+        if (scene == nullptr) {                     // this is our base case when we know we've reached the end
+            return 0;
+        }
+        
+        int count = 1;                              // we'll use this value to count number of scenes starting with current one
+        int i = 0;                                  // i will be used to iterate through child choices
+
+        while ( Scene<T>* child = scene->getChoice(i) ) {       // while will loop through each of the child choices of current choice
+            count += countScenes(child);                        // recursively add the count of each child branch
+            i++;
+        }
+        return count;                               // return total scene count for this tree or subtree
+    }                                               // end of method
 
     // TODO 7: how many endings are in the story that starts at scene?
     int countEndings(Scene<T>* scene) const {
