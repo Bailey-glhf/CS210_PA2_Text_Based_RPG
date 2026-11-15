@@ -1,4 +1,6 @@
 #include "Adventure.h"
+
+#include <filesystem>
 #include <iostream>
 
 // ===================== GIVEN HELPERS (do not change) =====================
@@ -221,17 +223,13 @@ void Adventure::play() {
 
         std::string item = moment->getItem();
         if (!item.empty()) {                                    // if scene has item
-            bool hasItem = false;
-            for (int i = 0; i < inventory.size(); i++) {
-                if (inventory.get(i) == item) {
-                    hasItem = true;
-                    break;
-                }
-            }
+            bool hasItem = inventory.search(item);
+
             if (hasItem) {
                 std::cout << "You already have: " << item << std::endl;     // if the bag already has it notify user
             }
             else {
+                inventory.addFront(new Item(item));
                 std::cout << "You picked up: " << item << std::endl;        // if the bag doesn't have it notify user it has been picked up
             }
         }
@@ -269,7 +267,7 @@ void Adventure::play() {
     std::cout << "Final HP: " << hp << "  Final LOOT: " << loot << std::endl;
     std::cout << "Inventory (" << inventory.size() << " items)" << std::endl;
     inventory.print();
-}
+}                                                                             // end of method
 
 // ===================== ANALYZING =====================
 
@@ -281,12 +279,12 @@ void Adventure::printStats() const {
     std::cout << "Scenes: " << tree_.countScenes() << std::endl;
     std::cout << "Endings: " << tree_.countEndings() << std::endl;
     std::cout << "Longest playthrough: " << tree_.height() << std::endl;
-}
+}                                                                       // end of method
 
 // TODO 15: print every ending in the story, one per line.
 void Adventure::printSpoilers() const {
     printEndings(tree_.getRoot(),"");
-}
+}                                                                       // end of method
 
 // TODO 16: print every ending below scene.
 // path holds the choice numbers taken to reach scene, like "2-1".
@@ -387,7 +385,7 @@ void Adventure::greedyRun() const {
         else {                                                              // if ending has been reached GAME OVER
             std::cout << "Result: reached an ending" << std::endl;
         }
-}
+}                                                                            // end of method
 
 // TODO 18: the best total loot you can collect from scene down to an ending,
 // arriving at scene with hp health and having taken path to get here.
@@ -434,7 +432,7 @@ int Adventure::bestLoot(Scene<Moment>* scene, int hp, const std::string& path, s
     }
 
     return greatestLoot;                                                 // returns highest loot available from all paths diverging from scene passed
-}
+}                                                                        // end of method
 
 // TODO 19: the optimal advisor. Use bestLoot from the first scene.
 // Print:
@@ -446,4 +444,20 @@ int Adventure::bestLoot(Scene<Moment>* scene, int hp, const std::string& path, s
 //   Optimal advisor
 //     Result: no path survives this story
 void Adventure::optimalRun() const {
-}
+    std::string path = "";                          // current path starts empty since we begin at root
+    std::string optimalPath = "";                   // optimal path will be chosen by bestLoot function
+
+
+    int optimalLoot = bestLoot((tree_.getRoot()), startHp_, path, optimalPath );    // calls bestLoot, returned int saved as most optimal Loot
+                                                                                               // if there is no survivable ending bestLoot returns -1
+
+    if (optimalLoot != -1) {                                                    // as long as survivable ending found print optimal path, loot, & result
+        std::cout << "Optimal Advisor" << std::endl;
+        std::cout << "Path: " << optimalPath << std::endl;
+        std::cout << "Loot: " << optimalLoot << std::endl;
+        std::cout << "Result: reached an ending" << std::endl;
+    }else {                                                                     // else print no survivable path result
+        std::cout << "Optimal Advisor" << std::endl;
+        std::cout << "Result: no path survives this story " << std::endl;
+    }
+}                                                                               // end of method

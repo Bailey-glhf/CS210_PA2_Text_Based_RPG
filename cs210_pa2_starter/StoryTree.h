@@ -98,7 +98,7 @@ public:
     void clear() {
         delete root_;                               // this will call the destructor from our Scene.h recursively deleting the entire tree
         root_ = nullptr;                            // no dangling pointers
-    }
+    }                                               // end of method
 
     int countScenes() const {
         return countScenes(root_);

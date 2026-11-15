@@ -47,11 +47,11 @@ public:
 
     T* getData() const {
         return data_;
-    }                                                       // end of method
+    }
 
     int getNumChoices() const {
         return numChoices_;
-    }                                                       // end of method
+    }
 
     // TODO 3: true if this scene is an ending.
     bool isEnding() const {
