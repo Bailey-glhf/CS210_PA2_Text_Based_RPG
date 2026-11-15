@@ -92,8 +92,63 @@ bool Adventure::load(const std::string& fileName) {
 //   - If anything goes wrong at any depth, return nullptr
 //     and make sure nothing you already built is leaked.
 Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label) {
-    return nullptr;
-}
+    std::string fullScene;                                          // reads scene returns null if none
+    if (!readField(in, "SCENE", fullScene)) {
+        return nullptr;
+    }
+
+    std::string hp;                                                 // reads hp returns null if none
+    if (!readField(in, "HP", hp)) {
+        return nullptr;
+    }
+    int hps = std::stoi(hp);                                        // stores value in an int
+
+
+    std::string loot;                                               // reads loot returns null if none
+    if (!readField(in, "LOOT", loot)) {
+        return nullptr;
+    }
+    int loots = std::stoi(loot);                                    // stores value in an int
+
+    std::string item;                                               // reads item returns null if none
+    if (!readField(in, "ITEM", item)) {
+        return nullptr;
+    }
+
+    std::string choice;                                             // reads choices returns null if none
+    if (!readField(in, "CHOICES", choice)) {
+        return nullptr;
+    }
+    int choices = std::stoi(choice);                                // stores value in an int
+
+    // verifies that number of choices is within valid range else returns null
+    if ( choices < 0 || choices > Scene<Moment>::MAX_CHOICES ) {
+        std::cout << "Error: scene <" << fullScene << "> has <" << choices << "> choices. The limit is 3." << std::endl;
+        return nullptr;
+    }
+
+    // Moment* and number of choices are passed into Scene construction to create new Scene
+    Scene<Moment>* scene = new Scene<Moment>(new Moment(fullScene, label, hps, loots, item), choices);
+
+    // for loop iterates through each choice option
+    for (int i = 0; i < choices; i++) {                               // when choices == 0 this is our base case to end recursion, skipping for loop and returning scene
+        std::string nextChoice;
+        if (!nextLine(in, nextChoice)) {                        // checks if there is another choice available
+            delete scene;                                             // if no next choice deletes scene and returns nullptr to leave the tree
+            return nullptr;
+        }
+
+        Scene<Moment>* child = readScene(in, nextChoice);           // recursive case calls readScene again to read off choices of child chosen
+
+        if (child == nullptr) {                                        // checks if child does is unable to build, this will delete scene return nullptr
+            delete scene;                                              // returning the null in recursive method will cause null to bubble up
+            return nullptr;                                            // deleting the scenes to prevent memory leaks on the way
+        }
+
+        scene->setChoice(i,child);                                     // stores our pointer into the choices_ array in Scene.h
+    }
+    return scene;                                                      // returns scene
+}                                                                      // end of method
 
 // ===================== PLAYING =====================
 
