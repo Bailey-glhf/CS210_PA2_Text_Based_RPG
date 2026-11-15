@@ -125,7 +125,7 @@ Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label)
 
     // verifies that number of choices is within valid range else returns null
     if ( choices < 0 || choices > Scene<Moment>::MAX_CHOICES ) {
-        std::cout << "Error: scene " << fullScene << " has " << choices << " choices. The limit is 3." << std::endl;
+        std::cout << "Error: scene \"" << fullScene << "\" has " << choices << " choices. The limit is 3." << std::endl;
         return nullptr;
     }
 
