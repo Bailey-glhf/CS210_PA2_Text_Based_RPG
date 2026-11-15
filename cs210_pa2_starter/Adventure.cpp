@@ -198,6 +198,77 @@ int Adventure::askChoice(int numChoices) {
 // and then print the bag.
 // The bag is a List<Item>. Start with HP = startHp_ and loot = 0.
 void Adventure::play() {
+    int hp = startHp_;
+    int loot = 0;
+    List<Item> inventory;
+
+    Scene<Moment>* current = tree_.getRoot();
+    if (!current) {
+        return;
+    }
+
+    while (current != nullptr) {
+        Moment* moment = current->getData();
+        if (!moment) {
+            break;
+        }
+
+        hp+= moment->getHpChange();                             // add its HP change to hp
+        loot+= moment->getLoot();                               // add loot to loot
+
+        std::cout << std::string(40,'-')<<std::endl;        // print line of 40 dashes
+        std::cout << moment->getText() << std::endl;            // print scene text
+
+        std::string item = moment->getItem();
+        if (!item.empty()) {                                    // if scene has item
+            bool hasItem = false;
+            for (int i = 0; i < inventory.size(); i++) {
+                if (inventory.get(i) == item) {
+                    hasItem = true;
+                    break;
+                }
+            }
+            if (hasItem) {
+                std::cout << "You already have: " << item << std::endl;     // if the bag already has it notify user
+            }
+            else {
+                std::cout << "You picked up: " << item << std::endl;        // if the bag doesn't have it notify user it has been picked up
+            }
+        }
+
+        std::cout<< "HP: " << hp << "  LOOT: " << loot << std::endl;        // display HP & LOOT status
+
+        if (hp <= 0 ) {                                                     // if HP = 0 GAME OVER
+            std::cout << "Your HP hit 0. GAME OVER." << std::endl;
+            break;
+        }
+        if (current->getNumChoices() == 0) {                                // if ending has been reached GAME OVER
+            std::cout << "THE END." << std::endl;
+            break;
+        }
+
+        int numChoices = current->getNumChoices();
+        for (int i = 0; i < numChoices; i++) {
+            Scene<Moment>* child = current->getChoice(i);
+            std::string label = "";                                         // initializes label string
+            if (child && child->getData()) {
+                label = child->getData()->getLabel();
+
+            }
+            std::cout << "[" << (i+1) << "]" << label << std::endl;         // print each choice as "[1] <label>"
+        }
+
+        int choice = askChoice(numChoices);                                 // use askChoice
+        if (choice == 0){                                                   // if askChoice returns 0
+            break;                                                          // leave play right away
+        }
+
+        current = current->getChoice(choice-1);
+    }
+    // when the game stops, print final hp, final loot, final inventory
+    std::cout << "Final HP: " << hp << "  Final LOOT: " << loot << std::endl;
+    std::cout << "Inventory (" << inventory.size() << " items)" << std::endl;
+    inventory.print();
 }
 
 // ===================== ANALYZING =====================
@@ -207,10 +278,14 @@ void Adventure::play() {
 //   Endings: <count>
 //   Longest playthrough: <height> choices
 void Adventure::printStats() const {
+    std::cout << "Scenes: " << tree_.countScenes() << std::endl;
+    std::cout << "Endings: " << tree_.countEndings() << std::endl;
+    std::cout << "Longest playthrough: " << tree_.height() << std::endl;
 }
 
 // TODO 15: print every ending in the story, one per line.
 void Adventure::printSpoilers() const {
+    printEndings(tree_.getRoot(),"");
 }
 
 // TODO 16: print every ending below scene.
@@ -220,7 +295,26 @@ void Adventure::printSpoilers() const {
 // If the very first scene is an ending, print "Path (start): <scene text>".
 // Endings print in order: choice 1 before choice 2 before choice 3.
 void Adventure::printEndings(Scene<Moment>* scene, const std::string& path) const {
-}
+    if (!scene) {                                       // checks if scene pointer null
+        return;                                         // exits if true
+    }
+    if (scene->isEnding()) {                            // checks if current scene is a leaf node
+        std::cout << "Path ";                           // formated output
+        if (path.empty()) {                             // checks if root itself is an ending
+            std::cout << "(start)";                     // formatted output
+        }
+        else {
+            std::cout << path;                          // prints choice numbers path
+        }
+        std::cout << ": " << *(scene->getData()) << std::endl;      // prints scene text
+    }
+    else {
+        for (int i = 0; i < scene->getNumChoices(); i++) {                  // loops through available choice options
+            std::string nextPath = extendPath(path, (i+1));     // extends string with next choice number
+            printEndings(scene->getChoice(i), nextPath);              // recursive call to go down child path
+        }
+    }
+}                                                                           // end of method
 
 // TODO 17: the greedy advisor.
 // Start at the first scene with startHp_ and 0 loot.
