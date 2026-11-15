@@ -7,8 +7,10 @@
 //   - choices_ must stay a double pointer: Scene<T>** choices_.
 //   - No std::vector, no std::array, no fixed-size array like choices_[3].
 //   - The scene OWNS data_ and every scene its slots point to.
+
 template <typename T>
 class Scene {
+
 private:
     T* data_;
     Scene<T>** choices_;
@@ -35,6 +37,12 @@ public:
         // TODO 2:
         // Free everything this scene owns.
         // Think about what it owns, and what each slot points to.
+
+        delete data_;                               // deletes moment owned by the scene
+        for (int i = 0; i < numChoices_; i++) {     // deletes each value stored in the array
+            delete choices_[i];
+        }
+        delete [] choices_;                         // deletes the entire array
     }
 
     T* getData() const {
@@ -47,17 +55,29 @@ public:
 
     // TODO 3: true if this scene is an ending.
     bool isEnding() const {
-        return false;
+        // scenes are only endings if there are no choices to make
+        if (numChoices_ == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // TODO 4: the scene behind slot index.
     // Return nullptr if index is not a real slot.
     Scene<T>* getChoice(int index) const {
-        return nullptr;
+        if (index >= 0 && index < numChoices_) {                // verifies that index is between [0,numChoices) bounds
+            return choices_[index];                             // returns choice if valid
+        }
+        return nullptr;                                         // returns nullptr if index is out of bounds
     }
 
     // TODO 5: put next into slot index.
     // Do nothing if index is not a real slot.
     void setChoice(int index, Scene<T>* next) {
+        if (index >= 0 && index < numChoices_) {                // if index is within bounds
+            choices_[index] = next;                             // next scene is successfully stored
+        }
     }
 };
