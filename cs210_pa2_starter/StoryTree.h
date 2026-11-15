@@ -52,8 +52,26 @@ private:
     // starting at scene. A single ending scene has height 0.
     // An empty story has height -1.
     int height(Scene<T>* scene) const {
-        return -1;
-    }
+        if (scene == nullptr) {                                 // empty story check returns -1
+            return -1;
+        }
+        if (scene->isEnding()) {                                // ending scene check returns 0
+            return 0;
+        }
+
+        int totalHeight = -1;                                         // we'll use this value to count number of endings starting with -1
+        int i = 0;                                              // i will be used to iterate through child choices
+
+        while ( Scene<T>* child = scene->getChoice(i) ) {       // while will loop through each of the child choices of current choice
+            int childHeight = height(child);                    // recursively gets the height of the children branch
+            if (childHeight > totalHeight) {                         // if child height is greastest then it gets set to the overall height
+                totalHeight = childHeight;                           // in order to record only the greatest height
+            }
+            i++;
+        }
+
+        return (totalHeight + 1);                   // return total height for this tree or subtree
+    }                                               // end of method
 
 public:
     StoryTree() : root_(nullptr) {}
