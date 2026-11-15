@@ -96,6 +96,8 @@ public:
     // TODO 9: free every scene in the story and leave the tree empty.
     // Hint: what does deleting a Scene already do for you?
     void clear() {
+        delete root_;                               // this will call the destructor from our Scene.h recursively deleting the entire tree
+        root_ = nullptr;                            // no dangling pointers
     }
 
     int countScenes() const {
