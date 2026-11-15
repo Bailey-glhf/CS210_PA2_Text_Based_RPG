@@ -200,18 +200,18 @@ int Adventure::askChoice(int numChoices) {
 // and then print the bag.
 // The bag is a List<Item>. Start with HP = startHp_ and loot = 0.
 void Adventure::play() {
-    int hp = startHp_;
-    int loot = 0;
-    List<Item> inventory;
+    int hp = startHp_;                                         // set starting HP
+    int loot = 0;                                              // set starting LOOT
+    List<Item> inventory;                                      // declared locally, when play() ends List desctructor cleans memory of list
 
-    Scene<Moment>* current = tree_.getRoot();
-    if (!current) {
+    Scene<Moment>* current = tree_.getRoot();                  // starts playthrough at first scene from ROOT
+    if (!current) {                                            // if scene unable to load properly end playthrough
         return;
     }
 
-    while (current != nullptr) {
-        Moment* moment = current->getData();
-        if (!moment) {
+    while (current != nullptr) {                               // while scene has valid data
+        Moment* moment = current->getData();                   // get data
+        if (!moment) {                                         // break loop if data fails to load
             break;
         }
 
