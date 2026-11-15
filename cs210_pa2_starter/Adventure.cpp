@@ -63,8 +63,25 @@ std::string Adventure::extendPath(const std::string& path, int choiceNumber) con
 //   - Build the whole story with readScene. The first scene's label is "START".
 //   - If anything failed, return false. Otherwise give the story to tree_.
 bool Adventure::load(const std::string& fileName) {
-    return false;
-}
+    std::ifstream in(fileName);                                                     // loads file as in
+    if (!in.is_open()) {                                                            // if in cannot open print error
+        std::cout << "Error: could not open file " << fileName << std::endl;             // and return false
+        return false;
+    }
+
+    std::string line;                                                               // string variable under name line
+    if (!readField(in, "START_HP", line)) {                   // if "START_HP" doesn't exist in in
+        return false;                                                               // return false
+    }
+    startHp_ = std::stoi(line);                                                     // stores string value following "START_HP" into an int startHp_
+
+    Scene<Moment>* root = readScene(in, "START");                        // first scene = root = "START" in file
+    if (!root) {                                                                    // if "START" does not exsist in in
+        return false;                                                               // return false
+    }
+    tree_.setRoot(root);                                                            // creates tree with set root
+    return true;                                                                    // returns true for successful load and build
+}                                                                       // end of method
 
 // TODO 11: read ONE scene and everything below it. Return it.
 //   - Read SCENE, HP, LOOT, ITEM, and CHOICES with readField, in that order.
