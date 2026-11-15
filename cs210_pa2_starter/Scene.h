@@ -22,6 +22,13 @@ public:
         // A scene with numChoices_ choices needs exactly numChoices_ slots.
         // An ending (0 choices) needs no slots at all.
         // Every slot must start out empty.
+
+        if (numChoices_ > 0) {
+            choices_ = new Scene<T>*[numChoices_];      // initializes array of scenes with # of values == numChoices_
+            for (int i = 0; i < numChoices_; i++) {     // iterates 0 to MAX_CHOICES-1, in this case [0,3) => 0, 1, 2
+                choices_[i] = nullptr;                  // initiallizes array slots 0, 1, 2 holding empty nullptrs
+            }
+        }
     }
 
     ~Scene() {
