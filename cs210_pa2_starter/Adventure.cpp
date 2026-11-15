@@ -123,7 +123,7 @@ Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label)
 
     // verifies that number of choices is within valid range else returns null
     if ( choices < 0 || choices > Scene<Moment>::MAX_CHOICES ) {
-        std::cout << "Error: scene <" << fullScene << "> has <" << choices << "> choices. The limit is 3." << std::endl;
+        std::cout << "Error: scene " << fullScene << " has " << choices << " choices. The limit is 3." << std::endl;
         return nullptr;
     }
 
@@ -159,8 +159,26 @@ Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label)
 //     and ask again.
 //   - If the input ends (getline fails), return 0.
 int Adventure::askChoice(int numChoices) {
-    return 0;
-}
+    std::string input_;                                         // creates input string variable
+
+    while (true) {                                              // begins input loop
+        std::cout << "Your choice: ";                           // prompts user for input
+
+        if (!std::getline(std::cin, input_)) {            // checks if getline fails
+            return 0;                                           // returns 0 if true
+        }
+        try {
+            int choiceNumber = std::stoi(input_);                   // stores string into an int variable
+
+            if (choiceNumber >= 1 && choiceNumber <= numChoices) {  // checks for valid input [1, numChoices]
+                return choiceNumber;                                // ends loop and returns value
+            }
+        } catch (const std::exception& e) {}
+
+        // if input is not within valid [1, numChoices] range then error message displayed and loop continues
+        std::cout << "Please type a number from 1 to " << numChoices << "." << std::endl;
+    }
+}                                                               // end of method
 
 // TODO 13: play the story once from the start.
 // Every time the player ENTERS a scene, in this order:
