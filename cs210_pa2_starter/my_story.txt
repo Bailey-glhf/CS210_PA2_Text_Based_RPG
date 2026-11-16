@@ -1,6 +1,102 @@
 START_HP 10
-SCENE Replace this file with your own story.
+SCENE Susie ScaredyCat is home a lone watching a movie at night when the power goes out.
 HP 0
 LOOT 0
 ITEM none
-CHOICES 0
+CHOICES 3
+LABEL Get in your car and drive to a friends    
+  SCENE You stay the night at your friends place. Order Taco Bell and fall asleep watching movies. Speedrun complete.
+  HP 0
+  LOOT 5
+  ITEM Grilled Cheese Burrito
+  CHOICES 0
+LABEL Check the breaker
+  SCENE You stumble around in the dark until you find the breaker panel in the closet but its jammed shut. You give up on opening it when you hear stange noises by the entrance stairs.
+  HP -2
+  LOOT 3
+  ITEM none
+  CHOICES 3
+  LABEL Hide
+    SCENE It sounds like somethings coming up the stairs. QUICK pick a hiding spot nearby!
+    HP 0
+    LOOT 0
+    ITEM none
+    CHOICES 2
+    LABEL Under clothes in the closet
+      SCENE You can't hear anything now under a mound of dirty laundry but you feel like it's not safe to come out yet.
+      HP 0
+      LOOT 0
+      ITEM Dirty Gym Socks
+      CHOICES 1
+        LABEL Wait it it's safe
+        SCENE You fall asleep and wake up late cause you didn't set any alarms. Missed your Data Structures final and fail the class.
+        HP -5
+        LOOT 3
+        ITEM Spring Semester Registration Revoked (Failed to Meet Prerequisites)
+        CHOICES 0
+    LABEL Under the bed
+      SCENE You crawl under the bed and look out from your comforter hanging over. You don't see anyone or hear the noise anymore. Maybe it's safe to make a call?
+      HP 2
+      LOOT 3
+      ITEM Missing Roku Remote
+      CHOICES 3
+      LABEL Call 911
+        SCENE Emergency services tell you not to move and a cop has been dispatched.
+        HP 2
+        LOOT 2
+        ITEM none
+        CHOICES 1
+      	  LABEL You can't trust the cops!
+            SCENE Unlocked Courage & Adrenaline. You sprint out from the bed, get in your car and leave. You fall asleep safely in the Taco Bell parking lot.
+            HP 3
+            LOOT 4
+            ITEM Doritos Locos Taco
+            CHOICES 0
+      	LABEL Call electrician cause the breaker panels jammed
+          SCENE It's 1 am outside of working hours, you leave a voicemail. Feeling defeated, you set an alarm and fall asleep safely under the bed.
+          HP -1
+          LOOT 0
+          ITEM Dead Phone
+          CHOICES 0
+      	LABEL Order Doordash
+          SCENE You order Taco Bell because they deliver late. By the time the order comes you're sure whatever noise you heard is long gone and it's finally safe.
+          HP 5
+          LOOT 3
+          ITEM Crunchwrap Supreme
+          CHOICES 0
+    LABEL Grab a weapon
+      SCENE You run to the kitchen you slide across the tile, falling flat hard on your face.
+      HP -8
+      LOOT 2
+      ITEM none
+      CHOICES 0
+    LABEL Investigate noise
+      SCENE Wow you're so brave. In all you're confident braveness you didn't use a flash light. You trip down the stairs where the noise was. Broke your neck and died.
+      HP -10
+      LOOT 0
+      ITEM Achievement: Goes Out Like a Hero
+      CHOICES 0
+LABEL Check the window to see the neighbors have power
+  SCENE It's late and most the neighbors are asleep but it looks like the neighbors still have power and the streetlamps are on. Looks like it's just you.
+  HP 0
+  LOOT 2
+  ITEM none
+  CHOICES 1
+  LABEL Check SDG&E app to see if you missed a payment
+    SCENE Looks like you've hit you're overdraft limit and the payment failed.
+    HP -2
+    LOOT 0
+    ITEM none
+    CHOICES 2
+    LABEL Pay bill from alternate account
+      SCENE After paying you set an early alarm on your phone to call them first thing in the morning and then head to bed.
+      HP 0
+      LOOT 1
+      ITEM New Credit Card Debt    
+      CHOICES 0
+    LABEL Check billing rate details
+      SCENE You draft an angry email to them about corporate greed and ridiculous rate hikes then set an early alarm before heading to bed so you can call them first thing in the morning.
+      HP -2
+      LOOT 3
+      ITEM none
+      CHOICES 0
