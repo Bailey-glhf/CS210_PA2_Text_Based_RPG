@@ -64,7 +64,7 @@ private:
 
         while ( Scene<T>* child = scene->getChoice(i) ) {       // while will loop through each of the child choices of current choice
             int childHeight = height(child);                    // recursively gets the height of the children branch
-            if (childHeight > totalHeight) {                         // if child height is greastest then it gets set to the overall height
+            if (childHeight > totalHeight) {                         // if child height is greatest then it gets set to the overall height
                 totalHeight = childHeight;                           // in order to record only the greatest height
             }
             i++;
