@@ -52,8 +52,8 @@ int main(int argc, char* argv[]) {
          std::cout << "Choose: ";
          if (!std::getline(std::cin, choice)) {
              break;
-         }
-         std::cout << std::endl;
+         }std::cout << std::endl;
+
          if (choice == "1") {
              game.play();
          } else if (choice == "2") {
