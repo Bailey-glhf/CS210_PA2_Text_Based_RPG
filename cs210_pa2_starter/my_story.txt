@@ -29,7 +29,7 @@ LABEL Check the breaker
       ITEM Dirty Gym Socks
       CHOICES 1
         LABEL Wait until it feels safe
-        SCENE You fall asleep and wake up late in the stinky clothes. Missed your Data Structures final and failed the class!
+        SCENE You fall asleep and wake up late under the stinky clothes. Missed your Data Structures final and failed the class!
         HP -5
         LOOT 3
         ITEM Spring Semester Registration Revoked (Failed to Meet Prerequisites)
@@ -77,7 +77,7 @@ LABEL Check the breaker
       ITEM Achievement-Out Like a Light
       CHOICES 0
 LABEL Check if the neighbors have power
-  SCENE You peak out the window and all the streetlamps are still in and a few TVs glow. Looks like it's just you.
+  SCENE You peak out the window and all the streetlamps are still in and a few TVs glowing. Looks like it's just you.
   HP 0
   LOOT 2
   ITEM none
