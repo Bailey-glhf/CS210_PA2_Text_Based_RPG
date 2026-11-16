@@ -1,102 +1,102 @@
 START_HP 10
-SCENE Susie ScaredyCat is home a lone watching a movie at night when the power goes out.
+SCENE Susie ScaredyCat is home alone watching a scary movie around midnight when the power goes out.
 HP 0
 LOOT 0
 ITEM none
 CHOICES 3
-LABEL Get in your car and drive to a friends    
-  SCENE You stay the night at your friends place. Order Taco Bell and fall asleep watching movies. Speedrun complete.
+LABEL Get in car and drive to a friends    
+  SCENE You stay the night at a friends place. Order Taco Bell and fall asleep watching movies. Speedrun complete.
   HP 0
   LOOT 1
   ITEM Grilled Cheese Burrito
   CHOICES 0
 LABEL Check the breaker
-  SCENE You stumble around in the dark until you find the breaker panel in the closet but its jammed shut. You give up on opening it when you hear stange noises by the entrance stairs.
+  SCENE You stumble in the dark until you find the breaker panel but its jammed shut. You hear strange noises by the stairs.
   HP -2
   LOOT 3
   ITEM none
   CHOICES 3
   LABEL Hide
-    SCENE It sounds like somethings coming up the stairs. QUICK pick a hiding spot nearby!
+    SCENE It sounds like somethings coming up the stairs. QUICK pick a hiding spot!
     HP 0
     LOOT 1
     ITEM none
     CHOICES 2
-    LABEL Under clothes in the closet
-      SCENE You can't hear anything now under a mound of dirty laundry but you feel like it's not safe to come out yet.
+    LABEL In the closet
+      SCENE You dive under a pile of dirty laundry. You can't see or hear anything, but it doesn't feel safe to come out yet.
       HP 0
       LOOT 1
       ITEM Dirty Gym Socks
       CHOICES 1
-        LABEL Wait it it's safe
-        SCENE You fall asleep and wake up late cause you didn't set any alarms. Missed your Data Structures final and fail the class.
+        LABEL Wait until it feels safe
+        SCENE You fall asleep and wake up late in the stinky clothes. Missed your Data Structures final and failed the class!
         HP -5
         LOOT 3
         ITEM Spring Semester Registration Revoked (Failed to Meet Prerequisites)
         CHOICES 0
     LABEL Under the bed
-      SCENE You crawl under the bed and look out from your comforter hanging over. You don't see anyone or hear the noise anymore. Maybe it's safe to make a call?
-      HP 2
+      SCENE You crawl under the bed. You don't see or hear anything odd anymore. Maybe it's safe to make a call?
+      HP -2
       LOOT 1
       ITEM Missing Roku Remote
       CHOICES 3
       LABEL Call 911
-        SCENE Emergency services tell you not to move and a cop has been dispatched.
+        SCENE Emergency services tell you not to move, a cop has been dispatched to your location.
         HP 2
         LOOT 0
         ITEM none
         CHOICES 1
-      	  LABEL You can't trust the cops!
-            SCENE Unlocked Courage & Adrenaline. You sprint out from the bed, get in your car and leave. You fall asleep safely in the Taco Bell parking lot.
+      	  LABEL Run from the cops!
+            SCENE Cops are scarier than mystery noises! You sprint out the house, drive to Taco Bell, and fall asleep in the parking lot.
             HP 3
             LOOT 0
-            ITEM Doritos Locos Taco
+            ITEM Doritos Locos Supreme Taco
             CHOICES 0
-      	LABEL Call electrician cause the breaker panels jammed
-          SCENE It's 1 am outside of working hours, you leave a voicemail. Feeling defeated, you set an alarm and fall asleep safely under the bed.
-          HP -1
+      	LABEL Call electrician
+          SCENE It's outside of working hours and goes to voicemail. Feeling defeated, you set an alarm and fall asleep under the bed.
+          HP -3
           LOOT 2
-          ITEM Neck Ache
+          ITEM Icey Hot (for neck ache)
           CHOICES 0
       	LABEL Order Doordash
-          SCENE You order Taco Bell because they deliver late. By the time the order comes you're sure whatever noise you heard is long gone and it's finally safe.
+          SCENE Only Taco Bell delivers this late. By the time it arrives, you're sure it's safe. You eat and fall fat asleep.
           HP 5
           LOOT 1
           ITEM Crunchwrap Supreme
           CHOICES 0
-    LABEL Grab a weapon
-      SCENE You run to the kitchen you slide across the tile, falling flat hard on your face.
+    LABEL Grab weapon
+      SCENE You run to the kitchen, slide across the tile in your socks falling hard and flat on your face.
       HP -8
       LOOT 3
       ITEM none
       CHOICES 0
     LABEL Investigate noise
-      SCENE Wow you're so brave. In all you're confident braveness you didn't use a flash light. You trip down the stairs where the noise was. Broke your neck and died.
+      SCENE Wow you're so brave! But you forgot a flash light! You trip down the stairs broke your neck and died.
       HP -10
       LOOT 6
-      ITEM Achievement: Goes Out Like a Hero
+      ITEM Achievement-Out Like a Light
       CHOICES 0
-LABEL Check the window to see the neighbors have power
-  SCENE It's late and most the neighbors are asleep but it looks like the neighbors still have power and the streetlamps are on. Looks like it's just you.
+LABEL Check if the neighbors have power
+  SCENE You peak out the window and all the streetlamps are still in and a few TVs glow. Looks like it's just you.
   HP 0
   LOOT 2
   ITEM none
   CHOICES 1
-  LABEL Check SDG&E app to see if you missed a payment
+  LABEL Check SDG&E
     SCENE Looks like you've hit you're overdraft limit and the payment failed.
     HP -2
     LOOT 1
-    ITEM none
+    ITEM Overdraft Fees
     CHOICES 2
-    LABEL Pay bill from alternate account
-      SCENE After paying you set an early alarm on your phone to call them first thing in the morning and then head to bed.
-      HP 0
-      LOOT 1
-      ITEM New Credit Card Debt    
-      CHOICES 0
-    LABEL Check billing rate details
-      SCENE You draft an angry email to them about corporate greed and ridiculous rate hikes then set an early alarm before heading to bed so you can call them first thing in the morning.
+    LABEL Pay with credit card
+      SCENE You complete the payment online and make note to call them in the morning. You go to bed broke.
       HP -2
+      LOOT 3
+      ITEM Credit Card Debt
+      CHOICES 0
+    LABEL Investigate billing details
+      SCENE You draft an angry email to them about corporate greed and rate hikes. You fall asleep and dream of installing solar.
+      HP -3
       LOOT 2
       ITEM none
       CHOICES 0
